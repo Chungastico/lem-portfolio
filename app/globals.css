@@ -7,6 +7,20 @@
     --color-verde-suave: #a4b3a4;
 }
 
+@keyframes marquee {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+.animate-marquee {
+  display: inline-flex;
+  animation: marquee 12s linear infinite;
+}
+
 
 .font-body { font-family: var(--font-body), system-ui, sans-serif; }
 .font-heading { font-family: var(--font-heading), ui-sans-serif, sans-serif; }

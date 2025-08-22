@@ -6,8 +6,8 @@ export default function Hero() {
       id="home"
       className="
         relative isolate overflow-hidden
-        text-[--color-cafe-claro]
         bg-[--color-verde-oscuro]
+        text-[--color-cafe-claro]
         min-h-[calc(100svh-var(--navbar-h))]
       "
     >
@@ -17,27 +17,27 @@ export default function Hero() {
         className="
           absolute inset-0 -z-10
           bg-[url('/hero/bg-waves.svg')] bg-no-repeat bg-cover
-          bg-[position:32%_0%]
+          bg-[position:28%_2%]
           pointer-events-none select-none
         "
       />
 
-      {/* PORTFOLIO (trazo + relleno con transparencia) */}
+      {/* PORTFOLIO (delante de la foto, debajo del nombre y encima del job title) */}
       <svg
         viewBox="0 0 1440 800"
         aria-hidden="true"
-        className="pointer-events-none absolute inset-0 z-10 hidden md:block"
+        className="pointer-events-none absolute inset-0 z-30 hidden md:block"
       >
         <text
-          x="60"
-          y="450"
+          x="56"
+          y="420"
           style={{ fontFamily: 'League Gothic, var(--font-heading)' }}
           fontSize="350"
           letterSpacing="8"
           fill="var(--color-cafe-claro)"
           fillOpacity="0.18"
           stroke="var(--color-cafe-claro)"
-          strokeOpacity="0.65"
+          strokeOpacity="0.60"
           strokeWidth="8"
         >
           PORTFOLIO
@@ -48,19 +48,20 @@ export default function Hero() {
       <div className="relative z-20 mx-auto h-full min-h-[calc(100svh-var(--navbar-h))] max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="grid h-full grid-cols-1 md:grid-cols-2">
           {/* Columna izquierda */}
-          <div className="flex h-full flex-col justify-between py-16 md:py-20">
-            {/* 1) Melanie Menéndez (café claro) */}
-            <p className="font-body text-[clamp(1.05rem,2.2vw,1.6rem)] text-[--color-cafe-claro]">
+          <div className="relative flex h-full flex-col justify-between py-16 md:py-20">
+            {/* 1) Nombre ENCIMA del SVG */}
+            <p className="relative z-40 font-body text-cream text-[clamp(1.05rem,2.2vw,1.6rem)]">
               Melanie Menéndez
             </p>
 
-            {/* 3) Graphic Designer (café claro, abajo) */}
-            <p className="font-body font-semibold text-[clamp(1.4rem,3.1vw,2.4rem)] tracking-wide pb-8 md:pb-12 text-[--color-cafe-claro]">
+            {/* 3) Job title DEBAJO del SVG */}
+            <p className="relative z-20 font-body font-semibold text-cream tracking-wide
+                           text-[clamp(1.5rem,3.4vw,2.5rem)] pb-8 md:pb-12">
               Graphic Designer
             </p>
           </div>
 
-          {/* Columna derecha: foto más abajo */}
+          {/* Columna derecha: foto (igual que tenías) */}
           <div className="relative h-full">
             <Image
               src="/Mel.png"
@@ -69,10 +70,11 @@ export default function Hero() {
               height={760}
               priority
               className="
-                absolute -bottom-3 md:-bottom-85 
-                right-[clamp(12px,3.5vw,32px)] z-20
-                h-auto w-[min(72vw,520px)] md:w-[min(42vw,520px)]
-                drop-shadow-[0_10px_34px_rgba(0,0,0,.28)]
+                absolute right-[clamp(12px,3.5vw,32px)] bottom-[-8px] md:bottom-[-85px]
+                z-20 h-auto
+                w-[min(76vw,560px)]
+                md:w-[min(47vw,600px)]
+                drop-shadow-[0_18px_48px_rgba(0,0,0,.24)]
               "
             />
           </div>
