@@ -1,38 +1,35 @@
 import Image from "next/image";
 import type { CSSProperties } from "react";
 
+// Tipamos las variables CSS que vamos a inyectar
+type HeroCSSVars = CSSProperties & Record<
+  "--pf-scale" | "--pf-ty" | "--pf-tx" | "--text-tx" | "--job-ty",
+  string | number
+>;
+
 export default function Hero() {
   // ⚙️ Ajustes rápidos
-  const PF_SCALE = 1.30;
-  const PF_TY = "-50px";
-  const PF_TX = "0px";
-  const SHADOW_OPACITY = 0.22;
+  const PF_SCALE = 1.30;        // tamaño del PORTFOLIO (Shadow + Border)
+  const PF_TY = "-50px";        // mover PORTFOLIO vertical
+  const PF_TX = "0px";          // mover PORTFOLIO horizontal (0 = centrado)
+  const SHADOW_OPACITY = 0.22;  // 0..1 → más transparente = menor valor
 
   // Tamaños de texto
-  const NAME_FS = "clamp(1.2rem, 2.6vw, 2.0rem)";
-  const JOB_FS = "clamp(1.6rem, 3.6vw, 2.8rem)";
+  const NAME_FS = "clamp(1.2rem, 2.6vw, 2.4rem)";
+  const JOB_FS  = "clamp(1.6rem, 3.6vw, 3.4rem)";
 
   // Posicionamiento de los textos
-  const TEXT_TX = "-34px";
-  const JOB_TY = "28px";
+  const TEXT_TX = "-34px";      // ⬅️➡️ mover bloque de textos (negativo = izquierda)
+  const JOB_TY  = "350px";       // ⬇️ mover “Graphic Designer” (sin reflow)
 
   // ✅ Variables CSS tipadas (sin any)
-  const cssVars: CSSProperties = {
-    ["--pf-scale" as any]: PF_SCALE, // <- si aquí te marca, usa la versión de abajo
-    ["--pf-ty" as any]: PF_TY,
-    ["--pf-tx" as any]: PF_TX,
-    ["--text-tx" as any]: TEXT_TX,
-    ["--job-ty" as any]: JOB_TY,
+  const cssVars: HeroCSSVars = {
+    "--pf-scale": PF_SCALE,
+    "--pf-ty": PF_TY,
+    "--pf-tx": PF_TX,
+    "--text-tx": TEXT_TX,
+    "--job-ty": JOB_TY,
   };
-
-  // --- Si tu TS/React types sí aceptan index signature, usa ESTA versión mejor:
-  // const cssVars: CSSProperties = {
-  //   "--pf-scale": PF_SCALE,
-  //   "--pf-ty": PF_TY,
-  //   "--pf-tx": PF_TX,
-  //   "--text-tx": TEXT_TX,
-  //   "--job-ty": JOB_TY,
-  // };
 
   return (
     <section
@@ -53,7 +50,7 @@ export default function Hero() {
         style={{ opacity: SHADOW_OPACITY }}
       />
 
-      {/* FOTO (anclada al section) */}
+      {/* FOTO: anclada al SECTION para que no se recorte a la derecha */}
       <div className="pointer-events-none absolute inset-x-0 bottom-0 z-20 overflow-x-visible">
         <Image
           src="/Mel.png"
@@ -75,27 +72,26 @@ export default function Hero() {
       <div className="relative z-20 mx-auto h-[calc(100svh-var(--navbar-h))] max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="grid h-full grid-cols-1 md:grid-cols-2">
           <div className="relative flex h-full flex-col justify-between py-16 md:py-20">
-            {/* Nombre */}
-            <p
-              className="relative z-40 font-body font-bold will-change-transform transform-gpu translate-x-[var(--text-tx)]"
-              style={{ fontSize: NAME_FS }}
-            >
-              Melanie Menéndez
-            </p>
+            <div className="will-change-transform transform-gpu translate-x-[var(--text-tx)]">
+              <p className="relative z-40 font-body font-bold" style={{ fontSize: NAME_FS }}>
+                Melanie Menéndez
+              </p>
 
-            {/* Job (abajo) */}
-            <p
-              className="relative z-20 font-body font-semibold tracking-wide pb-6 md:pb-8 will-change-transform transform-gpu translate-x-[var(--text-tx)] translate-y-[var(--job-ty)]"
-              style={{ fontSize: JOB_FS }}
-            >
-              Graphic Designer
-            </p>
+              <p
+                className="relative z-20 font-body font-semibold tracking-wide pb-6 md:pb-8
+                          will-change-transform transform-gpu translate-y-[var(--job-ty)]"
+                style={{ fontSize: JOB_FS }}
+              >
+                Graphic Designer
+              </p>
+            </div>
           </div>
+
           <div />
         </div>
       </div>
 
-      {/* 2) Border PORTFOLIO */}
+      {/* 2) Border PORTFOLIO (encima de la foto) */}
       <div
         aria-hidden
         className="absolute inset-0 z-30 bg-[url('/hero/Border_Portfolio.svg')] bg-no-repeat bg-center bg-[length:100%_100%] pointer-events-none select-none transform-gpu origin-center scale-[var(--pf-scale)] translate-x-[var(--pf-tx)] translate-y-[var(--pf-ty)]"
