@@ -1,0 +1,18 @@
+// src/components/Logo.tsx
+import * as React from "react";
+
+type Props = React.SVGProps<SVGSVGElement>;
+
+export default function Logo({ className, ...props }: Props) {
+    return (
+        <svg
+            viewBox="0 0 432 432"
+            xmlns="http://www.w3.org/2000/svg"
+            className={className}      
+            {...props}                 
+        >
+            <path d="M318.76,178.39h-59.01l-2.8-71.38-45.22,89.55-43.97-89.55v150.15h-59.33l-2.49-218.52h59.75l46.46,93.26,44.81-93.26h61.82v139.75Z" fill="currentColor"/>
+            <path d="M108.17,271.68h58.97v65.98s44.94-89.55,44.94-89.55l43.7,89.55,3.94-142.83h59.34v211.2h-61.22s-46.17-93.26-46.17-93.26l-44.53,93.26h-57.46s-1.51-134.35-1.51-134.35Z" fill="currentColor"/>
+        </svg>
+    );
+}

@@ -1,0 +1,38 @@
+@import "tailwindcss";
+
+/* 🎨 Colores del proyecto (Tailwind v4) */
+@theme {
+    --color-cafe-claro: #ffeecf;
+    --color-verde-oscuro: #578685;
+    --color-verde-suave: #a4b3a4;
+}
+
+
+.font-body { font-family: var(--font-body), system-ui, sans-serif; }
+.font-heading { font-family: var(--font-heading), ui-sans-serif, sans-serif; }
+
+.league-100 {
+    font-variation-settings: "wdth" 100;
+    font-optical-sizing: auto;
+}
+
+.bg-hero { background-color: var(--color-verde-oscuro); }
+.text-cream { color: var(--color-cafe-claro); }
+
+.navbar {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: var(--color-cafe-claro);
+    transition: transform 220ms ease;
+    will-change: transform;
+}
+.navbar--hidden { transform: translateY(-100%); }
+
+
+:root {
+  --navbar-h: 64px; /* h-16 del navbar */
+}
+@media (min-width: 768px){
+  :root { --navbar-h: 64px; } /* ajusta si cambias la altura en desktop */
+}
