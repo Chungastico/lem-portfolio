@@ -1,87 +1,96 @@
 import Image from "next/image";
 
 export default function Hero() {
+  // ⚙️ Ajustes rápidos
+  const PF_SCALE = 1.30;        // tamaño del PORTFOLIO (Shadow + Border)
+  const PF_TY = "-50px";        // mover PORTFOLIO vertical
+  const PF_TX = "0px";          // (no lo usamos para centrar; déjalo en 0)
+  const SHADOW_OPACITY = 0.22;  // 0..1 → más transparente = menor valor
+
+  // Tamaños de texto
+  const NAME_FS = "clamp(1.2rem, 2.6vw, 2.0rem)";
+  const JOB_FS  = "clamp(1.6rem, 3.6vw, 2.8rem)";
+
+  // Posicionamiento de los textos
+  const TEXT_TX = "-34px";      // ⬅️➡️ mover cada texto (negativo = izquierda)
+  const JOB_TY  = "28px";       // ⬇️ mover “Graphic Designer” (sin reflow)
+
   return (
     <section
       id="home"
-      className="
-        relative isolate overflow-hidden
-        bg-[--color-verde-oscuro]
-        text-[--color-cafe-claro]
-        min-h-[calc(100svh-var(--navbar-h))]
-      "
+      className="relative isolate overflow-y-hidden bg-verde-oscuro text-cafe-claro min-h-[calc(100svh-var(--navbar-h))]"
+      style={{
+        ["--pf-scale" as any]: PF_SCALE,
+        ["--pf-ty" as any]: PF_TY,
+        ["--pf-tx" as any]: PF_TX,
+        ["--text-tx" as any]: TEXT_TX,
+        ["--job-ty" as any]: JOB_TY,
+      }}
     >
-      {/* Fondo ondas */}
+      {/* 0) Waves al fondo */}
       <div
         aria-hidden
-        className="
-          absolute inset-0 -z-10
-          bg-[url('/hero/bg-waves.svg')] bg-no-repeat bg-cover
-          bg-[position:28%_2%]
-          pointer-events-none select-none
-        "
+        className="absolute inset-0 -z-20 bg-[url('/hero/bg-waves.svg')] bg-no-repeat bg-cover bg-[position:28%_2%] pointer-events-none select-none"
       />
 
-      {/* PORTFOLIO (delante de la foto, debajo del nombre y encima del job title) */}
-      <svg
-        viewBox="0 0 1440 800"
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0 z-30 hidden md:block"
-      >
-        <text
-          x="56"
-          y="420"
-          style={{ fontFamily: 'League Gothic, var(--font-heading)' }}
-          fontSize="350"
-          letterSpacing="8"
-          fill="var(--color-cafe-claro)"
-          fillOpacity="0.18"
-          stroke="var(--color-cafe-claro)"
-          strokeOpacity="0.60"
-          strokeWidth="8"
-        >
-          PORTFOLIO
-        </text>
-      </svg>
+      {/* 1) Shadow PORTFOLIO */}
+      <div
+        aria-hidden
+        className="absolute inset-0 z-10 bg-[url('/hero/Shadow_Portfolio.svg')] bg-no-repeat bg-center bg-[length:100%_100%] pointer-events-none select-none transform-gpu origin-center scale-[var(--pf-scale)] translate-x-[var(--pf-tx)] translate-y-[var(--pf-ty)]"
+        style={{ opacity: SHADOW_OPACITY }}
+      />
 
-      {/* Contenido */}
-      <div className="relative z-20 mx-auto h-full min-h-[calc(100svh-var(--navbar-h))] max-w-7xl px-4 sm:px-6 lg:px-8">
+      {/* FOTO (anclada al section, no al contenedor centrado) */}
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 z-20 overflow-x-visible">
+        <Image
+          src="/Mel.png"
+          alt="Retrato de Melanie Menéndez"
+          width={800}
+          height={980}
+          priority
+          className="
+            absolute right-[clamp(12px,2vw,24px)]
+            bottom-[-8px] md:bottom-[-30px] md:right-[-80px]
+            h-auto w-[min(95vw,820px)] md:w-[min(65vw,900px)]
+            origin-bottom-right scale-[1.15] md:scale-[0.9]
+            drop-shadow-[0_20px_56px_rgba(0,0,0,.28)]
+          "
+        />
+      </div>
+
+      {/* CONTENIDO (textos) */}
+      <div className="relative z-20 mx-auto h-[calc(100svh-var(--navbar-h))] max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="grid h-full grid-cols-1 md:grid-cols-2">
-          {/* Columna izquierda */}
           <div className="relative flex h-full flex-col justify-between py-16 md:py-20">
-            {/* 1) Nombre ENCIMA del SVG */}
-            <p className="relative z-40 font-body text-cream text-[clamp(1.05rem,2.2vw,1.6rem)]">
+            {/* Nombre */}
+            <p
+              className="relative z-40 font-body font-bold will-change-transform transform-gpu translate-x-[var(--text-tx)]"
+              style={{ fontSize: NAME_FS }}
+            >
               Melanie Menéndez
             </p>
 
-            {/* 3) Job title DEBAJO del SVG */}
-            <p className="relative z-20 font-body font-semibold text-cream tracking-wide
-                           text-[clamp(1.5rem,3.4vw,2.5rem)] pb-8 md:pb-12">
+            {/* Job (con desplazamiento vertical adicional) */}
+            <p
+              className="relative z-20 font-body font-semibold tracking-wide pb-6 md:pb-8 will-change-transform transform-gpu translate-x-[var(--text-tx)] translate-y-[var(--job-ty)]"
+              style={{ fontSize: JOB_FS }}
+            >
               Graphic Designer
             </p>
           </div>
 
-          {/* Columna derecha: foto (igual que tenías) */}
-          <div className="relative h-full">
-            <Image
-              src="/Mel.png"
-              alt="Retrato de Melanie Menéndez"
-              width={620}
-              height={760}
-              priority
-              className="
-                absolute right-[clamp(12px,3.5vw,32px)] bottom-[-8px] md:bottom-[-85px]
-                z-20 h-auto
-                w-[min(76vw,560px)]
-                md:w-[min(47vw,600px)]
-                drop-shadow-[0_18px_48px_rgba(0,0,0,.24)]
-              "
-            />
-          </div>
+          {/* Columna derecha vacía (la foto está absolute al section) */}
+          <div />
         </div>
       </div>
 
-      {/* separador del navbar (si es sticky/fixed) */}
+      {/* 2) Border PORTFOLIO (encima de la foto) */}
+      <div
+        aria-hidden
+        className="absolute inset-0 z-30 bg-[url('/hero/Border_Portfolio.svg')] bg-no-repeat bg-center bg-[length:100%_100%] pointer-events-none select-none transform-gpu origin-center scale-[var(--pf-scale)] translate-x-[var(--pf-tx)] translate-y-[var(--pf-ty)]"
+      />
+
+      {/* separador del navbar */}
       <div className="absolute top-0 left-0 w-full" style={{ height: 'var(--navbar-h)' }} />
     </section>
   );
