@@ -1,6 +1,7 @@
 import Navbar from "@/components/Navbar";
 import Hero from "@/sections/Hero";
 import AboutMeLine from "@/components/AboutMeLine";
+import AboutMe from "@/sections/AboutMe";
 
 export default function Home() {
   return (
@@ -8,6 +9,7 @@ export default function Home() {
       <Navbar />
       <Hero />
       <AboutMeLine />
+      <AboutMe />
     </main>
   );
 }
