@@ -2,7 +2,14 @@
 
 import Image from "next/image";
 import type { CSSProperties } from "react";
-import { motion, useAnimation, useScroll, useMotionValueEvent } from "framer-motion";
+import {
+    motion,
+    useAnimationControls,
+    useScroll,
+    useMotionValueEvent,
+    type Transition,
+    type TargetAndTransition,
+} from "framer-motion";
 
 // Tipamos las variables CSS que vamos a inyectar
 type HeroCSSVars = CSSProperties & Record<
@@ -11,7 +18,7 @@ type HeroCSSVars = CSSProperties & Record<
 >;
 
 export default function Hero() {
-    // ⚙️ Ajustes rápidos
+    // ⚙️ Ajustes rápidos (diseño)
     const PF_SCALE = 1.30;        // tamaño del PORTFOLIO (Shadow + Border)
     const PF_TY = "-25px";        // mover PORTFOLIO vertical
     const PF_TX = "0px";          // mover PORTFOLIO horizontal (0 = centrado)
@@ -35,9 +42,8 @@ export default function Hero() {
     };
 
     // ─────────────────────────────────────────────────────────────────────────────
-    // 🎬 ANIMACIÓN DIRECCIONAL CON SCROLL (invertida)
-    // Todas las posiciones son relativas a la posición INICIAL (x: 0).
-    const controls = useAnimation();
+    // 🎬 ANIMACIÓN DIRECCIONAL CON SCROLL (invertida: bajar ⇒ izquierda, subir ⇒ derecha)
+    const controls = useAnimationControls();
     const { scrollY } = useScroll();
 
     // Destinos en desktop (px)
@@ -52,8 +58,8 @@ export default function Hero() {
     const pctToPx = (p: number) =>
         typeof window !== "undefined" ? Math.round(window.innerWidth * p) : 0;
 
-    // Spring suave
-    const TRANSITION = { type: "spring", stiffness: 120, damping: 18, mass: 0.6 };
+    // Spring suave (tipado correcto)
+    const TRANSITION: Transition = { type: "spring", stiffness: 120, damping: 18, mass: 0.6 };
 
     // Detectar dirección de scroll
     let last = typeof window !== "undefined" ? window.scrollY : 0;
@@ -65,16 +71,17 @@ export default function Hero() {
         let xTarget: number;
 
         if (isMd()) {
-            // ⬇️ bajar => izquierda | ⬆️ subir => derecha  (INVERTIDO)
+            // ⬇️ bajar => izquierda | ⬆️ subir => derecha (INVERTIDO)
             xTarget = dirDown ? MD_LEFT : MD_RIGHT;
         } else {
-            // Mobile: 6% del viewport a px
+            // Mobile: usa ~6% del viewport convertidos a px
             const RIGHT_SM = pctToPx(0.06);   // subir → derecha
             const LEFT_SM  = pctToPx(-0.06);  // bajar → izquierda
             xTarget = dirDown ? LEFT_SM : RIGHT_SM;
         }
 
-        controls.start({ x: xTarget, transition: TRANSITION });
+        const target: TargetAndTransition = { x: xTarget, transition: TRANSITION };
+        controls.start(target);
     });
     // ─────────────────────────────────────────────────────────────────────────────
 
