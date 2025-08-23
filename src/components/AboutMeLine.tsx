@@ -20,7 +20,7 @@ export default function AboutMeLine() {
                 {doubled.map((text, i) => (
                     <span
                         key={i}
-                        className="mx-8 text-xl font-bold text-verde-oscuro"
+                        className="mx-4 text-3xl font-bold text-verde-oscuro font-body"
                     >
                         {text}
                     </span>
