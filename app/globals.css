@@ -48,5 +48,5 @@
   --navbar-h: 64px; /* h-16 del navbar */
 }
 @media (min-width: 768px){
-  :root { --navbar-h: 64px; } /* ajusta si cambias la altura en desktop */
+  :root { --navbar-h: 64px; }
 }

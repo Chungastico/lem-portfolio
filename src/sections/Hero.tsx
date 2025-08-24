@@ -88,37 +88,40 @@ export default function Hero() {
     return (
         <section
             id="home"
-            className="relative isolate overflow-y-hidden overflow-x-clip
-                       bg-verde-oscuro text-cafe-claro min-h-[calc(100svh-var(--navbar-h))]"
+                className="relative isolate overflow-y-hidden overflow-x-clip
+                        bg-verde-oscuro text-cafe-claro min-h-[calc(100vh-var(--navbar-h,64px))]"
             style={cssVars}
         >
             {/* 0) Waves al fondo (bleed para evitar corte) */}
             <div
                 aria-hidden
-                className="
-                    absolute inset-x-0 -top-24 -bottom-28
-                    -z-20 pointer-events-none select-none
-                    bg-[url('/hero/bg-waves.svg')]
-                    bg-no-repeat
-                    bg-[length:115%_115%]
-                    bg-[position:28%_0%]
-                "
+                className="absolute inset-x-0 -top-24 -bottom-28 -z-20 pointer-events-none select-none bg-no-repeat"
+                style={{
+                backgroundImage: "url('/hero/bg-waves.svg')",
+                backgroundSize: "115% 115%",
+                backgroundPosition: "28% 0%"
+                }}
             />
 
             {/* 1) Shadow PORTFOLIO */}
             <div
                 aria-hidden
-                className="absolute inset-0 z-10 bg-[url('/hero/Shadow_Portfolio.svg')] bg-no-repeat bg-center bg-[length:100%_100%]
-                           pointer-events-none select-none transform-gpu origin-center
-                           scale-[var(--pf-scale)] translate-x-[var(--pf-tx)] translate-y-[var(--pf-ty)]"
-                style={{ opacity: SHADOW_OPACITY }}
+                className="absolute inset-0 z-10 pointer-events-none select-none transform-gpu origin-center
+                            scale-[var(--pf-scale)] translate-x-[var(--pf-tx)] translate-y-[var(--pf-ty)]"
+                style={{
+                backgroundImage: "url('/hero/Shadow_Portfolio.svg')",
+                backgroundRepeat: "no-repeat",
+                backgroundPosition: "center",
+                backgroundSize: "100% 100%",
+                opacity: SHADOW_OPACITY
+                }}
             />
 
             {/* FOTO: motion.div mantiene pos inicial (x:0) y anima según dirección */}
             <motion.div
                 aria-hidden
                 className="pointer-events-none absolute inset-x-0 bottom-0 z-20"
-                initial={{ x: 0 }}
+                initial={false}
                 animate={controls}
             >
                 <Image
@@ -138,7 +141,7 @@ export default function Hero() {
             </motion.div>
 
             {/* CONTENIDO (textos) */}
-            <div className="relative z-20 mx-auto h-[calc(100svh-var(--navbar-h))] max-w-7xl px-4 sm:px-6 lg:px-8">
+            <div className="relative z-20 mx-auto h-[calc(100vh-var(--navbar-h,64px))] max-w-7xl px-4 sm:px-6 lg:px-8">
                 <div className="grid h-full grid-cols-1 md:grid-cols-2">
                     <div className="relative flex h-full flex-col justify-between py-16 md:py-20">
                         <div className="will-change-transform transform-gpu translate-x-[var(--text-tx)]">
@@ -163,9 +166,14 @@ export default function Hero() {
             {/* 2) Border PORTFOLIO (encima de la foto) */}
             <div
                 aria-hidden
-                className="absolute inset-0 z-30 bg-[url('/hero/Border_Portfolio.svg')] bg-no-repeat bg-center bg-[length:100%_100%]
-                           pointer-events-none select-none transform-gpu origin-center
-                           scale-[var(--pf-scale)] translate-x-[var(--pf-tx)] translate-y-[var(--pf-ty)]"
+                className="absolute inset-0 z-30 pointer-events-none select-none transform-gpu origin-center
+                            scale-[var(--pf-scale)] translate-x-[var(--pf-tx)] translate-y-[var(--pf-ty)]"
+                style={{
+                backgroundImage: "url('/hero/Border_Portfolio.svg')",
+                backgroundRepeat: "no-repeat",
+                backgroundPosition: "center",
+                backgroundSize: "100% 100%"
+                }}
             />
 
             <div className="absolute top-0 left-0 w-full" style={{ height: "var(--navbar-h)" }} />
