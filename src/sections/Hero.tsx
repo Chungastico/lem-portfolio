@@ -20,7 +20,7 @@ type HeroCSSVars = CSSProperties & Record<
 export default function Hero() {
     // ⚙️ Ajustes rápidos (diseño)
     const PF_SCALE = 1.30;        // tamaño del PORTFOLIO (Shadow + Border)
-    const PF_TY = "-25px";        // mover PORTFOLIO vertical
+    const PF_TY = "-44px";        // mover PORTFOLIO vertical
     const PF_TX = "0px";          // mover PORTFOLIO horizontal (0 = centrado)
     const SHADOW_OPACITY = 0.22;  // 0..1 → más transparente = menor valor
 
@@ -29,8 +29,8 @@ export default function Hero() {
     const JOB_FS  = "clamp(1.6rem, 3.6vw, 3.4rem)";
 
     // Posicionamiento de los textos
-    const TEXT_TX = "22px";       // ⬅️➡️ mover bloque de textos (negativo = izquierda)
-    const JOB_TY  = "320px";      // ⬇️ mover “Graphic Designer” (sin reflow)
+    const TEXT_TX = "-34px";       // ⬅️➡️ mover bloque de textos (negativo = izquierda)
+    const JOB_TY  = "340px";      // ⬇️ mover “Graphic Designer” (sin reflow)
 
     // ✅ Variables CSS tipadas (sin any)
     const cssVars: HeroCSSVars = {
@@ -134,7 +134,7 @@ export default function Hero() {
                         absolute right-0
                         bottom-[-8px] md:bottom-[-30px]
                         h-auto w-[min(95vw,820px)] md:w-[min(65vw,900px)]
-                        origin-bottom-right scale-[1.15] md:scale-[0.75]
+                        origin-bottom-right scale-[1.15] md:scale-[0.85]
                         drop-shadow-[0_20px_56px_rgba(0,0,0,.28)]
                     "
                 />

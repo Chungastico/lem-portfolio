@@ -46,7 +46,7 @@ export default function Navbar() {
                     </Link>
                 </div>
 
-                <ul className="hidden md:flex items-center gap-8 font-body font-bold text-verde-oscuro">
+                <ul className="hidden md:flex items-center gap-8 font-body text-lg font-bold text-verde-oscuro">
                     <li><Link href="#home" className="hover:underline underline-offset-4">Home</Link></li>
                     <li><Link href="#about" className="hover:underline underline-offset-4">About me</Link></li>
                     <li><Link href="#programs" className="hover:underline underline-offset-4">Programs</Link></li>
