@@ -139,7 +139,7 @@ export default function ContactPage() {
                             }
                             label={
                                 <Link
-                                    href="https://www.linkedin.com/in/melanie-menendez"
+                                    href="https://www.linkedin.com/in/melanie-menendez14/"
                                     target="_blank"
                                     rel="noreferrer"
                                     className="hover:underline focus:underline"
