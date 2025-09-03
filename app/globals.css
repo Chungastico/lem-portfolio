@@ -1,40 +1,58 @@
 @import "tailwindcss";
 
-/* 🎨 Colores del proyecto (Tailwind v4) */
 @theme {
     --color-cafe-claro: #ffeecf;
     --color-verde-oscuro: #578685;
     --color-verde-suave: #a4b3a4;
 }
 
+/* Animación marquee */
 @keyframes marquee {
-  0% {
-    transform: translateX(100%);
-  }
-  100% {
-    transform: translateX(-100%);
-  }
+    0% {
+        transform: translateX(100%);
+    }
+    100% {
+        transform: translateX(-100%);
+    }
 }
-
 .animate-marquee {
-  display: inline-flex;
-  animation: marquee 12s linear infinite;
+    display: inline-flex;
+    animation: marquee 12s linear infinite;
 }
 
-
-.font-body, .font-heading {
-  font-synthesis-weight: none;
-  text-rendering: optimizeLegibility;
+/* Configuración tipográfica */
+.font-body,
+.font-heading {
+    font-synthesis-weight: none;
+    text-rendering: optimizeLegibility;
 }
 
-.league-100 {
-    font-variation-settings: "wdth" 100;
-    font-optical-sizing: auto;
+/* Variantes de League Gothic locales */
+.font-heading {
+    font-family: var(--font-heading), var(--font-heading-semi), var(--font-heading-condensed), sans-serif;
 }
 
-.bg-hero { background-color: var(--color-verde-oscuro); }
-.text-cream { color: var(--color-cafe-claro); }
+.heading-regular {
+    font-family: var(--font-heading), sans-serif;
+}
 
+.heading-semi {
+    font-family: var(--font-heading-semi), sans-serif;
+}
+
+.heading-condensed {
+    font-family: var(--font-heading-condensed), sans-serif;
+}
+
+/* Utilidades de color */
+.bg-hero {
+    background-color: var(--color-verde-oscuro);
+}
+.text-cream {
+    color: var(--color-cafe-claro);
+}
+
+/* Navbar */
 .navbar {
     position: sticky;
     top: 0;
@@ -43,12 +61,16 @@
     transition: transform 220ms ease;
     will-change: transform;
 }
-.navbar--hidden { transform: translateY(-100%); }
-
-
-:root {
-  --navbar-h: 64px; /* h-16 del navbar */
+.navbar--hidden {
+    transform: translateY(-100%);
 }
-@media (min-width: 768px){
-  :root { --navbar-h: 64px; }
+
+/* Variables globales */
+:root {
+    --navbar-h: 64px; /* h-16 del navbar */
+}
+@media (min-width: 768px) {
+    :root {
+        --navbar-h: 64px;
+    }
 }
