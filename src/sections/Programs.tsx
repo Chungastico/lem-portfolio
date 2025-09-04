@@ -9,15 +9,19 @@ import type { CSSProperties } from "react";
    ───────────────────────────── */
 type ProgramsCSSVars = CSSProperties &
   Record<
-    | "--title-fs"      // tamaño del título PROGRAMS
-    | "--icon-size"     // tamaño de cada logo
-    | "--gap-x"         // gap horizontal del grid
-    | "--gap-y"         // gap vertical del grid
-    | "--wave-pos"      // object-position del wave.svg
-    | "--photo-left"    // offsets/escala de la foto izquierda
+    | "--title-fs"        // tamaño del título PROGRAMS
+    | "--title-ty"        // desplazamiento vertical del título (px)
+    | "--icon-size"       // tamaño de cada logo
+    | "--gap-x"           // gap horizontal del grid
+    | "--gap-y"           // gap vertical del grid
+    | "--wave-pos"        // object-position del wave.svg
+    | "--photo-left"      // offsets/escala de la foto izquierda
     | "--photo-bottom"
     | "--photo-scale"
-    | "--photo-w",      // ancho render de la foto (px)
+    | "--photo-w"         // ancho render de la foto (px)
+    | "--icon-col1-ty"    // desplazamiento vertical columna 1
+    | "--icon-col2-ty"    // desplazamiento vertical columna 2
+    | "--icon-col3-ty",   // desplazamiento vertical columna 3
     string | number
   >;
 
@@ -74,10 +78,10 @@ function PositionedPhoto({ src }: { src: string }) {
 /* ─────────────────────────────
    Config por breakpoint (sm/md/lg)
    Mantiene diseño desktop actual.
-   Sólo parametriza.
    ───────────────────────────── */
 type ViewCfg = {
   TITLE_FS: string;
+  TITLE_TY: string;   // px
   ICON_SIZE: string;
   GAP_X: string;
   GAP_Y: string;
@@ -87,25 +91,35 @@ type ViewCfg = {
   PHOTO_BOTTOM: string; // px (con signo)
   PHOTO_SCALE: number;
   PHOTO_W: string;      // px
+
+  ICON_COL1_TY: string; // px
+  ICON_COL2_TY: string; // px
+  ICON_COL3_TY: string; // px
 };
 
 // sm <640 | md 640–1023 | lg ≥1024
 const CFG: { sm: ViewCfg; md: ViewCfg; lg: ViewCfg } = {
   sm: {
-    TITLE_FS: "4.5rem",   // ~text-7xl
-    ICON_SIZE: "6rem",    // 96px (w-24 h-24)
+    TITLE_FS: "6rem",
+    TITLE_TY: "-200px", // sube el título en móvil
+    ICON_SIZE: "6rem",
     GAP_X: "2.5rem",
-    GAP_Y: "18rem",
+    GAP_Y: "0rem",
     WAVE_POS: "top",
 
-    PHOTO_LEFT: "-20px",
+    PHOTO_LEFT: "0px",
     PHOTO_BOTTOM: "-80px",
-    PHOTO_SCALE: 0.9,
+    PHOTO_SCALE: 0.8,
     PHOTO_W: "620px",
+
+    ICON_COL1_TY: "-240px",
+    ICON_COL2_TY: "-240px",
+    ICON_COL3_TY: "-240px",
   },
   md: {
-    TITLE_FS: "6rem",     // ~text-8xl
-    ICON_SIZE: "8rem",    // 128px (md:w-32 md:h-32)
+    TITLE_FS: "6rem",
+    TITLE_TY: "0px",
+    ICON_SIZE: "8rem",
     GAP_X: "2.5rem",
     GAP_Y: "3.5rem",
     WAVE_POS: "top",
@@ -114,10 +128,15 @@ const CFG: { sm: ViewCfg; md: ViewCfg; lg: ViewCfg } = {
     PHOTO_BOTTOM: "-80px",
     PHOTO_SCALE: 0.9,
     PHOTO_W: "680px",
+
+    ICON_COL1_TY: "0px",
+    ICON_COL2_TY: "0px",
+    ICON_COL3_TY: "0px",
   },
   lg: {
-    TITLE_FS: "8rem",     // ~text-9xl
-    ICON_SIZE: "9rem",    // 144px (lg:w-36 lg:h-36)
+    TITLE_FS: "8rem",
+    TITLE_TY: "0px",
+    ICON_SIZE: "9rem",
     GAP_X: "2.5rem",
     GAP_Y: "4rem",
     WAVE_POS: "top",
@@ -126,6 +145,10 @@ const CFG: { sm: ViewCfg; md: ViewCfg; lg: ViewCfg } = {
     PHOTO_BOTTOM: "-80px",
     PHOTO_SCALE: 0.9,
     PHOTO_W: "740px",
+
+    ICON_COL1_TY: "0px",
+    ICON_COL2_TY: "0px",
+    ICON_COL3_TY: "0px",
   },
 };
 
@@ -151,12 +174,14 @@ export default function Programs() {
   }, []);
 
   const {
-    TITLE_FS, ICON_SIZE, GAP_X, GAP_Y, WAVE_POS,
+    TITLE_FS, TITLE_TY, ICON_SIZE, GAP_X, GAP_Y, WAVE_POS,
     PHOTO_LEFT, PHOTO_BOTTOM, PHOTO_SCALE, PHOTO_W,
+    ICON_COL1_TY, ICON_COL2_TY, ICON_COL3_TY,
   } = CFG[bp];
 
   const cssVars: ProgramsCSSVars = {
     "--title-fs": TITLE_FS,
+    "--title-ty": TITLE_TY,
     "--icon-size": ICON_SIZE,
     "--gap-x": GAP_X,
     "--gap-y": GAP_Y,
@@ -165,6 +190,9 @@ export default function Programs() {
     "--photo-bottom": PHOTO_BOTTOM,
     "--photo-scale": PHOTO_SCALE,
     "--photo-w": PHOTO_W,
+    "--icon-col1-ty": ICON_COL1_TY,
+    "--icon-col2-ty": ICON_COL2_TY,
+    "--icon-col3-ty": ICON_COL3_TY,
   };
 
   return (
@@ -174,7 +202,7 @@ export default function Programs() {
       aria-labelledby="programs-heading"
       style={cssVars}
     >
-      {/* Fondo wave: mantiene centro, recorta laterales si hace falta */}
+      {/* Fondo wave */}
       <Image
         src="/programs/wave.svg"
         alt=""
@@ -185,7 +213,7 @@ export default function Programs() {
         className="pointer-events-none select-none -z-10"
       />
 
-      {/* Foto izquierda controlada por variables */}
+      {/* Foto izquierda */}
       <PositionedPhoto src="/programs/MelPrograms.png" />
 
       {/* Lado derecho */}
@@ -194,29 +222,52 @@ export default function Programs() {
           <div />
 
           <div className="flex flex-col justify-center items-start md:-translate-x-8 lg:-translate-x-16">
-            {/* Título controlado por --title-fs */}
+            {/* Título controlado por --title-fs y --title-ty */}
             <h2
               id="programs-heading"
-              className="heading-condensed leading-none tracking-wide text-left"
-              style={{ fontSize: "var(--title-fs)" }}
+              className="heading-condensed leading-none tracking-wide text-left will-change-transform"
+              style={{
+                fontSize: "var(--title-fs)",
+                transform: "translateY(var(--title-ty))",
+              }}
             >
               PROGRAMS
             </h2>
 
-            {/* Grid de logos con gaps y tamaño variables */}
+            {/* Columnas parametrizadas con offsets independientes */}
             <div
-              className="mt-10 md:mt-14 lg:mt-16 grid grid-cols-3 place-items-center"
-              style={{
-                columnGap: "var(--gap-x)",
-                rowGap: "var(--gap-y)",
-              }}
+              className="mt-10 md:mt-14 lg:mt-16 grid grid-cols-3"
+              style={{ columnGap: "var(--gap-x)", rowGap: "var(--gap-y)" }}
             >
-              <ProgramIcon src="/logo/ai.svg" alt="Adobe Illustrator" />
-              <ProgramIcon src="/logo/ps.svg" alt="Adobe Photoshop" />
-              <ProgramIcon src="/logo/canva.svg" alt="Canva" shape="circle" />
-              <ProgramIcon src="/logo/capcut.svg" alt="CapCut" />
-              <ProgramIcon src="/logo/lr.svg" alt="Adobe Lightroom" />
-              <ProgramIcon src="/logo/figma.svg" alt="Figma" />
+              {/* Columna 1 */}
+              <div
+                className="flex flex-col items-center"
+                style={{ transform: "translateY(var(--icon-col1-ty))" }}
+              >
+                <ProgramIcon src="/logo/ai.svg" alt="Adobe Illustrator" />
+                <div className="h-12" />
+                <ProgramIcon src="/logo/capcut.svg" alt="CapCut" />
+              </div>
+
+              {/* Columna 2 */}
+              <div
+                className="flex flex-col items-center"
+                style={{ transform: "translateY(var(--icon-col2-ty))" }}
+              >
+                <ProgramIcon src="/logo/ps.svg" alt="Adobe Photoshop" />
+                <div className="h-12" />
+                <ProgramIcon src="/logo/lr.svg" alt="Adobe Lightroom" />
+              </div>
+
+              {/* Columna 3 */}
+              <div
+                className="flex flex-col items-center"
+                style={{ transform: "translateY(var(--icon-col3-ty))" }}
+              >
+                <ProgramIcon src="/logo/canva.svg" alt="Canva" shape="circle" />
+                <div className="h-12" />
+                <ProgramIcon src="/logo/figma.svg" alt="Figma" />
+              </div>
             </div>
           </div>
         </div>
